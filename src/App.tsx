@@ -1,7 +1,7 @@
 import "./App.css";
 
 function App() {
-  return <p>Color Contrast Checker</p>;
+  return <h1 className="text-3xl">Color Contrast Checker</h1>;
 }
 
 export default App;
