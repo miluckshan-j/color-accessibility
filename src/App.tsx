@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import Card from "./components/Card";
 import ColorSelector from "./components/ColorSelector";
@@ -12,6 +13,19 @@ const ratios = {
 };
 
 function App() {
+  const [colors, setColors] = useState({
+    backgroundColor: "#ACC8E5",
+    textColor: "#112A46",
+  });
+
+  const onBackgroundChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setColors({ ...colors, backgroundColor: event.currentTarget.value });
+  };
+
+  const onTextChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setColors({ ...colors, textColor: event.currentTarget.value });
+  };
+
   return (
     <>
       <header className="my-4 p-2">
@@ -19,12 +33,22 @@ function App() {
       </header>
       <main className="mt-8 p-2">
         <div className="grid gap-4 md:gap-8 md:grid-cols-7">
-          <ColorSelector classes="md:col-span-3 p-0" color="#ACC8E5" />
+          <ColorSelector
+            classes="md:col-span-3 !p-0"
+            heading="Background"
+            color={colors.backgroundColor}
+            onChange={onBackgroundChange}
+          />
           <div className="flex justify-center items-center">
             <button className="px-4 py-2 bg-slate-200 rounded-lg">Flip</button>
           </div>
-          <ColorSelector classes="md:col-span-3 p-0" color="#282A46" />
-          <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6">
+          <ColorSelector
+            classes="md:col-span-3 !p-0"
+            heading="Text"
+            color={colors.textColor}
+            onChange={onTextChange}
+          />
+          <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6 border-0">
             <div className="md:col-span-6 text-center">
               <p>Contrast Ratio</p>
               <p className="text-2xl font-semibold">7.5:1</p>
