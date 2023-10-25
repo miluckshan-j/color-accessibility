@@ -1,11 +1,11 @@
 import Card from "./Card";
 
-type Props = {
+type ColorSelectorProps = {
   classes?: string;
   color?: string;
 };
 
-const ColorSelector = ({ classes, color }: Props) => {
+const ColorSelector = ({ classes, color }: ColorSelectorProps) => {
   return (
     <Card classes={`${classes}`}>
       <input type="text" placeholder="#" className="w-full p-4 rounded-lg" />
