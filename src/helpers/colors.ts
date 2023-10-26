@@ -1,5 +1,5 @@
 // https://github.com/bahamas10/css-color-names/blob/master/css-color-names.json
-export const cSSColors: {[name: string]: string} = {
+export const cSSColors: { [name: string]: string } = {
   aliceblue: "#f0f8ff",
   antiquewhite: "#faebd7",
   aqua: "#00ffff",
@@ -150,4 +150,7 @@ export const cSSColors: {[name: string]: string} = {
   yellowgreen: "#9acd32",
 };
 
-export const validHexRegEx = /^#([0-9a-f]{6}|[0-9a-f]{3})$/i
+export const validHexRegEx = /^#([0-9a-f]{6}|[0-9a-f]{3})$/i;
+
+// https://stackoverflow.com/questions/9682709/regexp-matching-hex-color-syntax-and-shorten-form
+export const validRgbRegEx = /rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/;
