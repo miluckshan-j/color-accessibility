@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, FocusEventHandler } from "react";
 import Card from "./Card";
 
 type ColorSelectorProps = {
@@ -6,6 +6,7 @@ type ColorSelectorProps = {
   heading?: string;
   color?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
 };
 
 const ColorSelector = ({
@@ -13,6 +14,7 @@ const ColorSelector = ({
   heading,
   color,
   onChange,
+  onBlur,
 }: ColorSelectorProps) => {
   return (
     <Card classes={`${classes}`}>
@@ -23,6 +25,7 @@ const ColorSelector = ({
         className="w-full p-4 rounded-lg"
         value={color?.toUpperCase()}
         onChange={onChange}
+        onBlur={onBlur}
       />
       <div
         style={{ backgroundColor: color }}

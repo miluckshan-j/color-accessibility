@@ -20,13 +20,21 @@ function App() {
   });
 
   const onBackgroundChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setColors({ ...colors, backgroundColor: event.currentTarget.value });
+  };
+
+  const onTextChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setColors({ ...colors, textColor: event.currentTarget.value });
+  };
+
+  const onBackgroundBlur = (event: React.FormEvent<HTMLInputElement>) => {
     const hexCode = convertToHex(event.currentTarget.value);
     if (hexCode) {
       setColors({ ...colors, backgroundColor: hexCode });
     }
   };
 
-  const onTextChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const onTextBlur = (event: React.FormEvent<HTMLInputElement>) => {
     const hexCode = convertToHex(event.currentTarget.value);
     if (hexCode) {
       setColors({ ...colors, textColor: hexCode });
@@ -45,6 +53,7 @@ function App() {
             heading="Background"
             color={colors.backgroundColor}
             onChange={onBackgroundChange}
+            onBlur={onBackgroundBlur}
           />
           <div className="flex justify-center items-center">
             <button className="px-4 py-2 bg-slate-200 rounded-lg">Flip</button>
@@ -54,6 +63,7 @@ function App() {
             heading="Text"
             color={colors.textColor}
             onChange={onTextChange}
+            onBlur={onTextBlur}
           />
           <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6 border-0">
             <div className="md:col-span-6 text-center">
