@@ -21,7 +21,7 @@ const ColorSelector = ({
         type="text"
         placeholder="#"
         className="w-full p-4 rounded-lg"
-        value={color}
+        value={color?.toUpperCase()}
         onChange={onChange}
       />
       <div

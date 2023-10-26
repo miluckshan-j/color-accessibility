@@ -150,7 +150,8 @@ export const cSSColors: { [name: string]: string } = {
   yellowgreen: "#9acd32",
 };
 
+// https://stackoverflow.com/questions/9682709/regexp-matching-hex-color-syntax-and-shorten-form
 export const validHexRegEx = /^#([0-9a-f]{6}|[0-9a-f]{3})$/i;
 
-// https://stackoverflow.com/questions/9682709/regexp-matching-hex-color-syntax-and-shorten-form
+// https://stackoverflow.com/questions/9585973/javascript-regular-expression-for-rgb-values
 export const validRgbRegEx = /rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/;

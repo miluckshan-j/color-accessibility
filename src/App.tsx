@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "./components/Card";
 import ColorSelector from "./components/ColorSelector";
 import RatioCard from "./components/RatioCard";
+import { convertToHex } from "./utils/colors";
 
 const ratios = {
   normalLevelAA: "Pass",
@@ -19,11 +20,17 @@ function App() {
   });
 
   const onBackgroundChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setColors({ ...colors, backgroundColor: event.currentTarget.value });
+    const hexCode = convertToHex(event.currentTarget.value);
+    if (hexCode) {
+      setColors({ ...colors, backgroundColor: hexCode });
+    }
   };
 
   const onTextChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setColors({ ...colors, textColor: event.currentTarget.value });
+    const hexCode = convertToHex(event.currentTarget.value);
+    if (hexCode) {
+      setColors({ ...colors, textColor: hexCode });
+    }
   };
 
   return (

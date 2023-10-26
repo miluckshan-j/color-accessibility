@@ -23,6 +23,21 @@ export const rgbToHex = (color: string) => {
 };
 
 export const isValidRgb = (rgb: string) => {
-  const removedSpacesString = rgb.replace(/\s/g, "");
-  return validRgbRegEx.test(removedSpacesString);
+  return validRgbRegEx.test(rgb);
+};
+
+export const convertToHex = (color: string) => {
+  const sanitizedString = color.replace(/\s/g, "").toLowerCase();
+  const isHex = sanitizedString.indexOf("#") === 0;
+  const isRgb = sanitizedString.indexOf("rgb") === 0;
+
+  if (isHex && isValidHex(sanitizedString)) {
+    return sanitizedString;
+  }
+
+  if (isRgb && isValidRgb(sanitizedString)) {
+    return rgbToHex(sanitizedString);
+  }
+
+  return cSSColorsToHex(sanitizedString);
 };
