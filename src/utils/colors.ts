@@ -26,12 +26,19 @@ export const isValidRgb = (rgb: string) => {
   return validRgbRegEx.test(rgb);
 };
 
+export const convertShortHexToLong = (hex: string) => {
+  return hex[0] + hex[1].repeat(2) + hex[2].repeat(2) + hex[3].repeat(2);
+};
+
 export const convertToHex = (color: string) => {
   const sanitizedString = color.replace(/\s/g, "").toLowerCase();
   const isHex = sanitizedString.indexOf("#") === 0;
   const isRgb = sanitizedString.indexOf("rgb") === 0;
 
   if (isHex && isValidHex(sanitizedString)) {
+    if (sanitizedString.length === 4) {
+      return convertShortHexToLong(sanitizedString);
+    }
     return sanitizedString;
   }
 
@@ -40,4 +47,12 @@ export const convertToHex = (color: string) => {
   }
 
   return cSSColorsToHex(sanitizedString);
+};
+
+export const hexToRgb = (hex: string) => {
+  return {
+    r: parseInt(hex.slice(1, 3), 16),
+    g: parseInt(hex.slice(3, 5), 16),
+    b: parseInt(hex.slice(5, 7), 16),
+  };
 };
