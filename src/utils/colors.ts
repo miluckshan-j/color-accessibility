@@ -1,4 +1,13 @@
-import { cSSColors, validHexRegEx, validRgbRegEx } from "../helpers/colors";
+import {
+  BlueConstant,
+  GammaConstant,
+  GreenConstant,
+  RedConstant,
+  cSSColors,
+  rgb,
+  validHexRegEx,
+  validRgbRegEx,
+} from "../helpers/colors";
 
 export const cSSColorsToHex = (color: string) => {
   const hex = Object.keys(cSSColors).findIndex(
@@ -36,7 +45,7 @@ export const convertToHex = (color: string) => {
   const isRgb = sanitizedString.indexOf("rgb") === 0;
 
   if (isHex && isValidHex(sanitizedString)) {
-    if (sanitizedString.length === 4) {
+    if (sanitizedString.length === 4 || sanitizedString.length === 5) {
       return convertShortHexToLong(sanitizedString);
     }
     return sanitizedString;
@@ -49,10 +58,32 @@ export const convertToHex = (color: string) => {
   return cSSColorsToHex(sanitizedString);
 };
 
-export const hexToRgb = (hex: string) => {
+export const hexToRgb = (hex: string): rgb => {
   return {
-    r: parseInt(hex.slice(1, 3), 16),
-    g: parseInt(hex.slice(3, 5), 16),
-    b: parseInt(hex.slice(5, 7), 16),
+    red: parseInt(hex.slice(1, 3), 16),
+    green: parseInt(hex.slice(3, 5), 16),
+    blue: parseInt(hex.slice(5, 7), 16),
   };
+};
+
+// https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-procedure
+// https://stackoverflow.com/questions/9733288/how-to-programmatically-calculate-the-contrast-ratio-between-two-colors
+const luminance = (rgb: rgb) => {
+  const sRgb = [rgb.red, rgb.green, rgb.blue].map((value) => {
+    value = value / 255;
+    return value <= 0.03928
+      ? value / 12.92
+      : Math.pow((value + 0.055) / 1.055, GammaConstant);
+  });
+  return (
+    sRgb[0] * RedConstant + sRgb[1] * GreenConstant + sRgb[2] * BlueConstant
+  );
+};
+
+export const contrastRatio = (textColor: rgb, backgroundColor: rgb) => {
+  const textColorLuminance = luminance(textColor);
+  const backgroundColorLuminance = luminance(backgroundColor);
+  const brightestColor = Math.max(textColorLuminance, backgroundColorLuminance);
+  const darkestColor = Math.min(textColorLuminance, backgroundColorLuminance);
+  return (brightestColor + 0.05) / (darkestColor + 0.05);
 };

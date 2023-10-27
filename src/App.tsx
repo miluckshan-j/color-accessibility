@@ -3,7 +3,7 @@ import "./App.css";
 import Card from "./components/Card";
 import ColorSelector from "./components/ColorSelector";
 import RatioCard from "./components/RatioCard";
-import { convertToHex } from "./utils/colors";
+import { contrastRatio, convertToHex, hexToRgb } from "./utils/colors";
 
 const ratios = {
   normalLevelAA: "Pass",
@@ -15,6 +15,10 @@ const ratios = {
 
 function App() {
   const [colors, setColors] = useState({
+    backgroundColor: "#ACC8E5",
+    textColor: "#112A46",
+  });
+  const [validColors, setValidColors] = useState({
     backgroundColor: "#ACC8E5",
     textColor: "#112A46",
   });
@@ -31,6 +35,9 @@ function App() {
     const hexCode = convertToHex(event.currentTarget.value);
     if (hexCode) {
       setColors({ ...colors, backgroundColor: hexCode });
+      setValidColors({ ...validColors, backgroundColor: hexCode });
+    } else {
+      setColors({ ...colors, backgroundColor: validColors.backgroundColor });
     }
   };
 
@@ -38,6 +45,9 @@ function App() {
     const hexCode = convertToHex(event.currentTarget.value);
     if (hexCode) {
       setColors({ ...colors, textColor: hexCode });
+      setValidColors({ ...validColors, textColor: hexCode });
+    } else {
+      setColors({ ...colors, textColor: validColors.textColor });
     }
   };
 
@@ -68,7 +78,12 @@ function App() {
           <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6 border-0">
             <div className="md:col-span-6 text-center">
               <p>Contrast Ratio</p>
-              <p className="text-2xl font-semibold">7.5:1</p>
+              <p className="text-2xl font-semibold">
+                {contrastRatio(
+                  hexToRgb(colors.textColor),
+                  hexToRgb(colors.backgroundColor)
+                ).toPrecision(3)}
+              </p>
             </div>
             <RatioCard
               classes="md:col-span-2 grid gap-4 md:grid-cols-2"

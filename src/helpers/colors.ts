@@ -151,7 +151,20 @@ export const cSSColors: { [name: string]: string } = {
 };
 
 // https://stackoverflow.com/questions/9682709/regexp-matching-hex-color-syntax-and-shorten-form
-export const validHexRegEx = /^#([0-9a-f]{6}|[0-9a-f]{3})$/i;
+export const validHexRegEx =
+  /^#([0-9a-f]{6}|[0-9a-f]{3}|[0-9a-f]{3}[0-9]{1})$/i;
 
 // https://stackoverflow.com/questions/9585973/javascript-regular-expression-for-rgb-values
 export const validRgbRegEx = /rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/;
+
+export const RedConstant = 0.2126;
+export const GreenConstant = 0.7152;
+export const BlueConstant = 0.0722;
+
+export const GammaConstant = 2.4;
+
+export type rgb = {
+  red: number;
+  green: number;
+  blue: number;
+};
