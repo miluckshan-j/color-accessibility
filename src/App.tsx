@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Card from "./components/Card";
 import ColorSelector from "./components/ColorSelector";
@@ -13,22 +13,57 @@ const ratios = {
   uILevelAA: "Pass",
 };
 
+type colorsType = {
+  backgroundColor: string;
+  textColor: string;
+};
+
+const calculateColorRatio = (colors: colorsType) => {
+  return contrastRatio(
+    hexToRgb(colors.textColor),
+    hexToRgb(colors.backgroundColor)
+  ).toPrecision(3);
+};
+
 function App() {
   const [colors, setColors] = useState({
     backgroundColor: "#ACC8E5",
     textColor: "#112A46",
-  });
+  } as colorsType);
   const [validColors, setValidColors] = useState({
     backgroundColor: "#ACC8E5",
     textColor: "#112A46",
-  });
+  } as colorsType);
+  const [colorRatio, setColorRatio] = useState(calculateColorRatio(colors));
+
+  useEffect(() => {
+    const hexCode = convertToHex(validColors.backgroundColor);
+    if (hexCode) {
+      setColorRatio(calculateColorRatio(validColors));
+    }
+  }, [colors.backgroundColor]);
+
+  useEffect(() => {
+    const hexCode = convertToHex(validColors.textColor);
+    if (hexCode) {
+      setColorRatio(calculateColorRatio(validColors));
+    }
+  }, [colors.textColor]);
 
   const onBackgroundChange = (event: React.FormEvent<HTMLInputElement>) => {
     setColors({ ...colors, backgroundColor: event.currentTarget.value });
+    const hexCode = convertToHex(event.currentTarget.value);
+    if (hexCode) {
+      setValidColors({ ...validColors, backgroundColor: hexCode });
+    }
   };
 
   const onTextChange = (event: React.FormEvent<HTMLInputElement>) => {
     setColors({ ...colors, textColor: event.currentTarget.value });
+    const hexCode = convertToHex(event.currentTarget.value);
+    if (hexCode) {
+      setValidColors({ ...validColors, textColor: hexCode });
+    }
   };
 
   const onBackgroundBlur = (event: React.FormEvent<HTMLInputElement>) => {
@@ -78,12 +113,7 @@ function App() {
           <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6 border-0">
             <div className="md:col-span-6 text-center">
               <p>Contrast Ratio</p>
-              <p className="text-2xl font-semibold">
-                {contrastRatio(
-                  hexToRgb(colors.textColor),
-                  hexToRgb(colors.backgroundColor)
-                ).toPrecision(3)}
-              </p>
+              <p className="text-2xl font-semibold">{colorRatio}</p>
             </div>
             <RatioCard
               classes="md:col-span-2 grid gap-4 md:grid-cols-2"
