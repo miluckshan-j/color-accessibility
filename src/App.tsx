@@ -99,10 +99,10 @@ function App() {
 
   return (
     <>
-      <header className="my-4 p-2">
+      <header className="my-4 py-2 px-8 md:p-4">
         <h1 className="text-2xl font-bold">Color Contrast Checker</h1>
       </header>
-      <main className="mt-8 p-2">
+      <main className="mt-8 p-4">
         <div className="grid gap-4 md:gap-8 md:grid-cols-7">
           <ColorSelector
             classes="md:col-span-3 !p-0"
