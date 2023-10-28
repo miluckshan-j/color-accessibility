@@ -10,6 +10,11 @@ type colorsType = {
   textColor: string;
 };
 
+const defaultColors: colorsType = {
+  backgroundColor: "#ACC8E5",
+  textColor: "#112A46",
+};
+
 const calculateColorRatio = (colors: colorsType) => {
   const ratio = contrastRatio(
     hexToRgb(colors.textColor),
@@ -25,15 +30,15 @@ const calculateColorRatio = (colors: colorsType) => {
   };
 };
 
+const flipColors = (colors: colorsType) => {
+  let { textColor, backgroundColor } = colors;
+  [textColor, backgroundColor] = [backgroundColor, textColor];
+  return { textColor, backgroundColor };
+};
+
 function App() {
-  const [colors, setColors] = useState({
-    backgroundColor: "#ACC8E5",
-    textColor: "#112A46",
-  } as colorsType);
-  const [validColors, setValidColors] = useState({
-    backgroundColor: "#ACC8E5",
-    textColor: "#112A46",
-  } as colorsType);
+  const [colors, setColors] = useState(defaultColors);
+  const [validColors, setValidColors] = useState(defaultColors);
   const [ratios, setRatios] = useState(calculateColorRatio(colors));
 
   useEffect(() => {
@@ -86,6 +91,11 @@ function App() {
     }
   };
 
+  const handleFlipClick = () => {
+    setColors(flipColors(colors));
+    setValidColors(flipColors(validColors));
+  };
+
   return (
     <>
       <header className="my-4 p-2">
@@ -101,7 +111,12 @@ function App() {
             onBlur={onBackgroundBlur}
           />
           <div className="flex justify-center items-center">
-            <button className="px-4 py-2 bg-slate-200 rounded-lg">Flip</button>
+            <button
+              className="px-4 py-2 bg-slate-200 rounded-lg"
+              onClick={handleFlipClick}
+            >
+              🔄
+            </button>
           </div>
           <ColorSelector
             classes="md:col-span-3 !p-0"

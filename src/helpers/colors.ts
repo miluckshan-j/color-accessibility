@@ -157,13 +157,15 @@ export const validHexRegEx =
 // https://stackoverflow.com/questions/9585973/javascript-regular-expression-for-rgb-values
 export const validRgbRegEx = /rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/;
 
-export const RedConstant = 0.2126;
-export const GreenConstant = 0.7152;
-export const BlueConstant = 0.0722;
+export const redConstant = 0.2126;
 
-export const GammaConstant = 2.4;
+export const greenConstant = 0.7152;
 
-export type rgb = {
+export const blueConstant = 0.0722;
+
+export const gammaConstant = 2.4;
+
+export type rgbType = {
   red: number;
   green: number;
   blue: number;
