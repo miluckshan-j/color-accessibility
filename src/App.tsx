@@ -5,24 +5,24 @@ import ColorSelector from "./components/ColorSelector";
 import RatioCard from "./components/RatioCard";
 import { contrastRatio, convertToHex, hexToRgb } from "./utils/colors";
 
-const ratios = {
-  normalLevelAA: "Pass",
-  normalLevelAAA: "Fail",
-  largeLevelAA: "Pass",
-  largeLevelAAA: "Pass",
-  uILevelAA: "Pass",
-};
-
 type colorsType = {
   backgroundColor: string;
   textColor: string;
 };
 
 const calculateColorRatio = (colors: colorsType) => {
-  return contrastRatio(
+  const ratio = contrastRatio(
     hexToRgb(colors.textColor),
     hexToRgb(colors.backgroundColor)
   ).toPrecision(3);
+  return {
+    value: ratio + ":1",
+    normalLevelAA: parseFloat(ratio) > 4.5 ? "Pass" : "Fail",
+    normalLevelAAA: parseFloat(ratio) > 7 ? "Pass" : "Fail",
+    largeLevelAA: parseFloat(ratio) > 3 ? "Pass" : "Fail",
+    largeLevelAAA: parseFloat(ratio) > 4.5 ? "Pass" : "Fail",
+    uILevelAA: parseFloat(ratio) > 3 ? "Pass" : "Fail",
+  };
 };
 
 function App() {
@@ -34,19 +34,19 @@ function App() {
     backgroundColor: "#ACC8E5",
     textColor: "#112A46",
   } as colorsType);
-  const [colorRatio, setColorRatio] = useState(calculateColorRatio(colors));
+  const [ratios, setRatios] = useState(calculateColorRatio(colors));
 
   useEffect(() => {
     const hexCode = convertToHex(validColors.backgroundColor);
     if (hexCode) {
-      setColorRatio(calculateColorRatio(validColors));
+      setRatios(calculateColorRatio(validColors));
     }
   }, [colors.backgroundColor]);
 
   useEffect(() => {
     const hexCode = convertToHex(validColors.textColor);
     if (hexCode) {
-      setColorRatio(calculateColorRatio(validColors));
+      setRatios(calculateColorRatio(validColors));
     }
   }, [colors.textColor]);
 
@@ -113,7 +113,7 @@ function App() {
           <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6 border-0">
             <div className="md:col-span-6 text-center">
               <p>Contrast Ratio</p>
-              <p className="text-2xl font-semibold">{colorRatio}</p>
+              <p className="text-2xl font-semibold">{ratios.value}</p>
             </div>
             <RatioCard
               classes="md:col-span-2 grid gap-4 md:grid-cols-2"
