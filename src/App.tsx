@@ -4,6 +4,7 @@ import Card from "./components/Card";
 import ColorSelector from "./components/ColorSelector";
 import RatioCard from "./components/RatioCard";
 import { contrastRatio, convertToHex, hexToRgb } from "./utils/colors";
+import Preview from "./components/Preview";
 
 type colorsType = {
   backgroundColor: string;
@@ -125,7 +126,12 @@ function App() {
             onChange={onTextChange}
             onBlur={onTextBlur}
           />
-          <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6 border-0">
+          <Preview
+            backgroundColor={validColors.backgroundColor}
+            textColor={validColors.textColor}
+            classes="md:col-span-7"
+          />
+          <Card classes="md:col-span-7 grid gap-4 md:grid-cols-6 border-0 p-0">
             <div className="md:col-span-6 text-center">
               <p>Contrast Ratio</p>
               <p className="text-2xl font-semibold">{ratios.value}</p>
