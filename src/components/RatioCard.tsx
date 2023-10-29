@@ -39,7 +39,7 @@ const RatioCardElement = ({
 const RatioCard = ({ classes, heading, level2A, level3A }: RatioCardProps) => {
   return (
     <Card classes={`${classes}`}>
-      <p className="md:col-span-2 text-sm text-center">{heading}</p>
+      <p className="md:col-span-2 text-sm font-bold text-center">{heading}</p>
       {level2A ? (
         <RatioCardElement
           heading={heading}

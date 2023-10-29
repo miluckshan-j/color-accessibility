@@ -18,7 +18,7 @@ const ColorSelector = ({
 }: ColorSelectorProps) => {
   return (
     <Card classes={`${classes}`}>
-      <p className="text-sm p-4 pb-0">{heading}</p>
+      <p className="text-sm p-4 pb-0 text-slate-500">{heading}</p>
       <input
         type="text"
         placeholder="#"
@@ -27,10 +27,6 @@ const ColorSelector = ({
         onChange={onChange}
         onBlur={onBlur}
       />
-      <div
-        style={{ backgroundColor: color }}
-        className="w-full h-32 md:h-20 rounded-b-lg"
-      ></div>
     </Card>
   );
 };
